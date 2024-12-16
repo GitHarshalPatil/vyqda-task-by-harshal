@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Task Table</title>
+    <link rel="stylesheet" href="/task-1.css">
+</head>
+
+<body>
+    <h2>Task Progress Table</h2>
+    <div id="root"></div>
+
+    <!-- Include React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const initialData = [
+            { id: 1, task: "Onboarding Call", status: "Pending", dueDate: "10-12-2024" },
+            { id: 2, task: "Google Search Console Access", status: "Pending", dueDate: "10-12-2024" },
+            { id: 3, task: "Google Analytics Access", status: "Pending", dueDate: "10-12-2024" },
+            { id: 4, task: "Website Access", status: "Pending", dueDate: "10-12-2024" },
+            { id: 5, task: "Technical Audit", status: "In Progress", dueDate: "10-12-2024" },
+            { id: 6, task: "Keyword Research", status: "Pending", dueDate: "10-12-2024" },
+            { id: 7, task: "Content Review", status: "Pending", dueDate: "10-12-2024" },
+            { id: 8, task: "SEO Optimization", status: "Pending", dueDate: "10-12-2024" },
+            { id: 9, task: "Backlink Setup", status: "Pending", dueDate: "10-12-2024" },
+            { id: 10, task: "Performance Review", status: "Pending", dueDate: "10-12-2024" }
+        ];
+
+        function TaskTable() {
+            const [tasks, setTasks] = useState(initialData);
+            const [editRowId, setEditRowId] = useState(null);
+            const [tempData, setTempData] = useState({});
+
+            const handleEdit = (id) => {
+                const task = tasks.find(task => task.id === id);
+                setTempData({ ...task });
+                setEditRowId(id);
+            };
+
+            const handleChange = (field, value) => {
+                setTempData({ ...tempData, [field]: value });
+            };
+
+            const handleSave = () => {
+                const updatedTasks = tasks.map(task =>
+                    task.id === editRowId ? tempData : task
+                );
+                setTasks(updatedTasks);
+                setEditRowId(null);
+                setTempData({});
+            };
+
+            const handleCancel = () => {
+                setEditRowId(null);
+                setTempData({});
+            };
+
+            const handlePrepareData = () => {
+                const dataForApi = tasks.map(({ id, task, status, dueDate }) => ({
+                    id, task, status, dueDate
+                }));
+                console.log("Data ready for POST API:", dataForApi);
+                alert("Data is ready for POST API.");
+            };
+
+            return (
+                <div>
+                    <table className="task-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Task Name</th>
+                                <th>Status</th>
+                                <th>Due Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tasks.map((task, index) => (
+                                <tr key={task.id}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        {editRowId === task.id ? (
+                                            <input
+                                                type="text"
+                                                value={tempData.task}
+                                                onChange={(e) => handleChange("task", e.target.value)}
+                                            />
+                                        ) : (
+                                            task.task
+                                        )}
+                                    </td>
+                                    <td>
+                                        {editRowId === task.id ? (
+                                            <select
+                                                value={tempData.status}
+                                                onChange={(e) => handleChange("status", e.target.value)}
+                                            >
+                                                <option value="Pending">Pending</option>
+                                                <option value="In Progress">In Progress</option>
+                                                <option value="Completed">Completed</option>
+                                            </select>
+                                        ) : (
+                                            task.status
+                                        )}
+                                    </td>
+                                    <td>
+                                        {editRowId === task.id ? (
+                                            <input
+                                                type="date"
+                                                value={tempData.dueDate}
+                                                onChange={(e) => handleChange("dueDate", e.target.value)}
+                                            />
+                                        ) : (
+                                            task.dueDate
+                                        )}
+                                    </td>
+                                    <td>
+                                        {editRowId === task.id ? (
+                                            <div className="button-group">
+                                                <button className="action-button ok-button" onClick={handleSave}>OK</button>
+                                                <button className="action-button cancel-button" onClick={handleCancel}>Cancel</button>
+                                            </div>
+                                        ) : (
+                                            <button
+                                                className="action-button edit-button"
+                                                onClick={() => handleEdit(task.id)}
+                                            >
+                                                Edit
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <button className="prepare-button" onClick={handlePrepareData}>Prepare Data</button>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TaskTable />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>

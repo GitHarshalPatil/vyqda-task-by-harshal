@@ -1,0 +1,115 @@
+    /* General Styling */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+    }
+
+    h2 {
+        text-align: center;
+        margin: 20px 0;
+        color: #333;
+    }
+
+    /* Table Styling */
+    .task-table {
+        width: 95%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .task-table th,
+    .task-table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+    }
+
+    .task-table th {
+        background-color: #007BFF;
+        color: white;
+        font-weight: bold;
+    }
+
+    .task-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .task-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    input,
+    select {
+        width: 90%;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .action-button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        font-size: 14px;
+    }
+
+    .edit-button {
+        background-color: #007BFF;
+    }
+
+    .edit-button:hover {
+        background-color: #0056b3;
+    }
+
+    .ok-button {
+        background-color: #28a745;
+    }
+
+    .ok-button:hover {
+        background-color: #218838;
+    }
+
+    .cancel-button {
+        background-color: #dc3545;
+    }
+
+    .cancel-button:hover {
+        background-color: #c82333;
+    }
+
+    .prepare-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #ffc107;
+        color: #333;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .prepare-button:hover {
+        background-color: #e0a800;
+    }
